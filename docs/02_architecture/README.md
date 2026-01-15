@@ -28,7 +28,7 @@ It defines **subsystems, control loops, sensor-actuator relationships, data flow
 
 **Mermaid diagram (render locally in VS Code or other Markdown editor with Mermaid plugin):**
 
-\`\`\`mermaid
+```mermaid
 graph TD
   %% Sensors
   SoilTemp[Soil Temperature Sensor]
@@ -67,13 +67,13 @@ graph TD
 
   %% Safety Interlocks
   WaterLevel -.-> WaterPump
-\`\`\`
+```
 
 ---
 
 ## 3. System Architecture / Data Flow
 
-\`\`\`mermaid
+```mermaid
 graph LR
   Sensors[Environmental & Soil Sensors] --> MCU[Microcontroller]
   MCU --> Actuators[Soil Heater, Water Pump, Fan, Light, Atomizer]
@@ -85,7 +85,7 @@ graph LR
   MCU --> Safety[State Machine & Alarms]
   Safety --> Actuators
   Safety --> UI
-\`\`\`
+```
 
 ---
 
