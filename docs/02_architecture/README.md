@@ -6,6 +6,18 @@ It defines **subsystems, control loops, sensor-actuator relationships, data flow
 
 ---
 
+## Contents
+1. [System Overview](#1-system-overview)
+2. [Control Loop Diagram](#2-control-loop-diagram)
+3. [System Architecture / Data Flow](#3-system-architecture--data-flow)
+4. [Wiring & Connectivity](#4-wiring--connectivity-scope-1)
+5. [Safety Interlocks & State Machine](#5-safety-interlocks--state-machine)
+6. [GPIO & Pin Assignments](#6-gpio--pin-assignments)
+7. [Documentation Notes](#7-documentation-notes)
+8. [Next Steps](#8-next-steps)
+
+---
+
 ## 1. System Overview
 
 **Scope 1 Subsystems:**
@@ -69,6 +81,8 @@ graph TD
   WaterLevel -.-> WaterPump
 ```
 
+> Notes: Dashed arrow (`-.->`) indicates safety interlock (e.g., pump disabled if water low).
+
 ---
 
 ## 3. System Architecture / Data Flow
@@ -97,7 +111,7 @@ graph LR
 - Safety interlocks: pump disabled on low water, heater disabled on over-temp
 - Camera connection to MCU
 
-> **Placeholder:** Add actual wiring diagrams and GPIO assignments here (Mermaid or PNG/SVG).
+> **Placeholder:** Replace with actual wiring diagrams or Mermaid wiring diagram.
 
 ---
 
@@ -118,18 +132,41 @@ graph LR
 
 ---
 
-## 6. Documentation Notes
+## 6. GPIO & Pin Assignments (Scope 1)
 
-- Track wiring changes, calibration offsets, and control loop tuning  
-- Include images/screenshots for wiring, sensors, actuators, and camera setup  
-- Future Scope 2+ enhancements will extend this architecture  
+| Component           | Pin     | Notes                     |
+|--------------------|---------|---------------------------|
+| Soil Temp Sensor    | GPIO 4  | DS18B20                   |
+| Soil Moisture       | ADC1    | Capacitive sensor         |
+| Water Pump          | GPIO 15 | Relay                     |
+| Air Temp Sensor     | GPIO 5  | DHT22 or similar          |
+| Air Humidity Sensor | GPIO 5  | Shared with Air Temp      |
+| Fan                 | GPIO 16 | PWM control               |
+| Soil Heater         | GPIO 17 | Relay / MOSFET            |
+| Air Heater          | GPIO 18 | Relay / MOSFET            |
+| Air Cooler          | GPIO 19 | Relay / MOSFET            |
+| Atomizer            | GPIO 21 | Relay                     |
+| White Grow Light    | GPIO 22 | PWM or relay              |
+| Camera Module       | I2C/SPI | Depends on camera used    |
+
+> Adjust pins based on your hardware and safety requirements.
 
 ---
 
-## 7. Next Steps
+## 7. Documentation Notes
 
-1. Replace ASCII/placeholders with proper diagrams  
-2. Define PID/threshold parameters for controllers  
-3. Add GPIO assignments for all sensors/actuators  
-4. Add camera wiring & timelapse setup  
-5. Keep architecture synced with Scope 1 build guide
+- Track wiring changes, calibration offsets, and control loop tuning  
+- Include images/screenshots for wiring, sensors, actuators, and camera setup  
+- Keep Mermaid diagrams in sync with firmware updates  
+- Future Scope 2+ enhancements will include recipes, multi-channel lighting, and camera triggers
+
+---
+
+## 8. Next Steps
+
+1. Replace ASCII/placeholders with **full wiring diagrams**  
+2. Define PID/threshold parameters for controllers and control loop frequency  
+3. Verify and finalize GPIO assignments  
+4. Add camera wiring & timelapse configuration  
+5. Keep architecture synced with Scope 1 build guide  
+6. Prepare placeholders for Scope 2 (recipes, growth stages, CO2 control)
