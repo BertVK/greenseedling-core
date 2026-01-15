@@ -106,3 +106,7 @@ It is designed to be **shipped as a physical product** and serve as the basis fo
 - Validate sensor readings and control loops
 - Document build process, wiring, BOM, and calibration steps
 - Begin firmware development for Scope 1 functionality
+
+## Getting Started
+
+See the detailed [Scope 1 Build Guide](GETTING_STARTED.md)
