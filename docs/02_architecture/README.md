@@ -21,6 +21,48 @@ Detailed diagrams, wiring schematics, and notes are included as placeholders to 
 | Safety & Alarms | Visual and audible alarms, interlocks |
 | User Interface | Home Assistant or web interface |
 
+## Scope 1 Control Loops
+<Mermaid Control Loop Diagram Block>
+```mermaid
+graph TD
+  %% Sensors
+  SoilTemp[Soil Temperature Sensor]
+  SoilMoist[Soil Moisture Sensor]
+  AirTemp[Air Temperature Sensor]
+  AirRH[Relative Humidity Sensor]
+  Lux[Lux Sensor]
+  WaterLevel[Water Reservoir Level]
+  FanRPM[Fan RPM Sensor]
+
+  %% Controllers
+  SoilTempCtrl[Soil Temperature Controller]
+  SoilMoistCtrl[Soil Moisture Controller]
+  AirTempCtrl[Air Temperature Controller]
+  AirRHCtrl[Air Humidity Controller]
+  LightCtrl[Light Controller]
+  FanCtrl[Fan Controller]
+
+  %% Actuators
+  SoilHeater[Soil Heater]
+  WaterPump[Water Pump]
+  AirHeater[Air Heater]
+  AirCooler[Air Cooler]
+  Atomizer[Air Moisture Atomizer]
+  WhiteLight[White Grow Light]
+  Fan[Fan]
+
+  %% Control Loops
+  SoilTemp --> SoilTempCtrl --> SoilHeater
+  SoilMoist --> SoilMoistCtrl --> WaterPump
+  AirTemp --> AirTempCtrl --> AirHeater
+  AirTemp --> AirTempCtrl --> AirCooler
+  AirRH --> AirRHCtrl --> Atomizer
+  Lux --> LightCtrl --> WhiteLight
+  FanRPM --> FanCtrl --> Fan
+
+  %% Safety Interlocks
+  WaterLevel -.-> WaterPump
+
 ---
 
 ## 2. Control Loop Diagram (Scope 1)
@@ -33,7 +75,44 @@ Detailed diagrams, wiring schematics, and notes are included as placeholders to 
 [Water Reservoir Level] → [Pump Interlock]
 
 
-> Placeholder: Replace with a proper diagram (Mermaid, draw.io, or KiCad schematic).
+## System Architecture / Data Flow
+<Mermaid System Architecture Block>
+
+**Explanation:**
+- Sensors feed the controllers  
+- Controllers drive actuators  
+- Dashed arrow (`-.->`) shows safety interlock (WaterPump disabled if reservoir low)  
+
+GitHub will render this as a clean **flowchart**.  
+
+---
+
+## 2️⃣ System Architecture / Data Flow Diagram (Mermaid)
+
+```markdown
+```mermaid
+graph LR
+  %% Sensors
+  Sensors[Environmental & Soil Sensors] --> MCU[Microcontroller]
+
+  %% Actuators
+  MCU --> Actuators[Soil Heater, Water Pump, Fan, Light, Atomizer]
+
+  %% Logging
+  MCU --> Logs[Measurement & Event Logging]
+
+  %% User Interface
+  MCU --> UI[Home Assistant / Web UI]
+  UI --> User[Grower / Operator]
+
+  %% Camera
+  MCU --> Camera[Camera Module]
+  Camera --> UI
+
+  %% Safety
+  MCU --> Safety[State Machine & Alarms]
+  Safety --> Actuators
+  Safety --> UI
 
 ---
 
